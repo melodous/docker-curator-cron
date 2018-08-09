@@ -1,10 +1,11 @@
 FROM alpine:latest
 MAINTAINER Raúl Melo <raul.melo@opensolutions.cloud>
 
-RUN apk update && apk add dcron wget rsync ca-certificates && rm -rf /var/cache/apk/*
+COPY requirements.txt /
+RUN apk update && apk add dcron wget rsync ca-certificates
 
 RUN apk --update add python py-setuptools py-pip dcron wget rsync ca-certificates && \
-    pip install elasticsearch-curator==5.1.1 && \
+    pip install -r /requirements.txt && \
     apk del py-pip && \
     rm -rf /var/cache/apk/*
 
